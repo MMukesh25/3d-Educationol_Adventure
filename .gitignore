@@ -14,7 +14,11 @@ backend/.mvn/wrapper/maven-wrapper.jar
 backend/mvnw
 backend/mvnw.cmd
 
-# Node / React
+# Backend sub-repository
+backend/
+
+# Node
+ / React
 frontend/node_modules/
 frontend/dist/
 frontend/dist-ssr/
