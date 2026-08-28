@@ -1,0 +1,222 @@
+/* ==========================================================================
+   3D Educational Adventure Platform — Child-Friendly Glassmorphism Design
+   ========================================================================== */
+
+:root {
+  --primary-coral: #ff6b6b;
+  --primary-coral-hover: #ff5252;
+  --accent-gold: #ffd166;
+  --accent-mint: #06d6a0;
+  --accent-sky: #118ab2;
+  --accent-deep: #073b4c;
+  --accent-purple: #9d4edd;
+  --accent-pink: #ff70a6;
+  
+  --bg-gradient-sky: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+  --bg-gradient-night: linear-gradient(135deg, #1f1c2c 0%, #928dab 100%);
+  --bg-gradient-math: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+  --bg-gradient-mystery: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+  --bg-gradient-coding: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --bg-gradient-forest: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  --bg-gradient-castle: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+
+  --card-glass: rgba(255, 255, 255, 0.75);
+  --card-glass-hover: rgba(255, 255, 255, 0.9);
+  --card-glass-dark: rgba(20, 25, 45, 0.75);
+  --card-border: rgba(255, 255, 255, 0.6);
+  --card-shadow: 0 12px 32px 0 rgba(31, 38, 135, 0.15);
+  --card-shadow-pop: 0 20px 40px 0 rgba(31, 38, 135, 0.25);
+
+  --font-family: 'Fredoka', 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --radius-sm: 14px;
+  --radius-md: 22px;
+  --radius-lg: 32px;
+  --radius-full: 9999px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--bg-gradient-sky);
+  color: #2c3e50;
+  min-height: 100vh;
+  overflow-x: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent-sky);
+  border-radius: var(--radius-full);
+}
+
+/* Glass Panels */
+.glass-panel {
+  background: var(--card-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 2px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.glass-panel:hover {
+  box-shadow: var(--card-shadow-pop);
+}
+
+/* Big Child-Friendly Buttons */
+.btn-fun {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  font-family: var(--font-family);
+  font-size: 1.25rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.15), 0 15px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.15s ease;
+  position: relative;
+  text-decoration: none;
+  outline: none;
+}
+
+.btn-fun:active {
+  transform: translateY(6px);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15), 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-fun-coral {
+  background: linear-gradient(180deg, #ff7b7b 0%, #ff5252 100%);
+  color: white;
+  border: 3px solid #ff9e9e;
+}
+.btn-fun-gold {
+  background: linear-gradient(180deg, #ffe066 0%, #f4bf22 100%);
+  color: #5c3b00;
+  border: 3px solid #fff3a8;
+}
+.btn-fun-mint {
+  background: linear-gradient(180deg, #2ae7b4 0%, #06d6a0 100%);
+  color: white;
+  border: 3px solid #82f5d7;
+}
+.btn-fun-purple {
+  background: linear-gradient(180deg, #b76eeb 0%, #9d4edd 100%);
+  color: white;
+  border: 3px solid #dfaeff;
+}
+.btn-fun-sky {
+  background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
+  color: white;
+  border: 3px solid #bae6fd;
+}
+
+/* Floating Animations */
+@keyframes floatUp {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(2deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(255, 209, 102, 0.6)); }
+  50% { transform: scale(1.05); filter: drop-shadow(0 0 25px rgba(255, 209, 102, 0.9)); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-6deg); }
+  75% { transform: rotate(6deg); }
+}
+
+.anim-float {
+  animation: floatUp 4s ease-in-out infinite;
+}
+
+.anim-pulse {
+  animation: pulseGlow 2.5s infinite;
+}
+
+.anim-wiggle:hover {
+  animation: wiggle 0.4s ease-in-out;
+}
+
+/* Big Option Card for Kids */
+.option-card {
+  background: white;
+  border: 3px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.option-card:hover {
+  transform: translateY(-5px) scale(1.03);
+  border-color: var(--accent-sky);
+  box-shadow: 0 15px 30px rgba(17, 138, 178, 0.2);
+}
+
+.option-card.selected {
+  background: #e0f2fe;
+  border-color: var(--accent-sky);
+  box-shadow: 0 0 0 4px rgba(17, 138, 178, 0.3);
+}
+
+.option-card.correct {
+  background: #d1fae5;
+  border-color: var(--accent-mint);
+  color: #065f46;
+  animation: pulseGlow 1s ease-in-out;
+}
+
+.option-card.incorrect {
+  background: #fee2e2;
+  border-color: var(--primary-coral);
+  color: #991b1b;
+}
+
+/* 3D Canvas Container */
+.canvas-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.ui-overlay {
+  position: relative;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.ui-interactive {
+  pointer-events: auto;
+}
