@@ -1,0 +1,22 @@
+{
+  "name": "3d-educational-adventure-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "3D Animated Educational Adventure Platform for Children",
+  "scripts": {
+    "dev": "npm run dev --prefix frontend",
+    "build": "npm run build --prefix frontend",
+    "preview": "npm run preview --prefix frontend",
+    "start": "npm run dev --prefix frontend",
+    "install:all": "npm install --prefix frontend"
+  },
+  "keywords": [
+    "react",
+    "threejs",
+    "education",
+    "3d",
+    "gamification"
+  ],
+  "author": "MMukesh25",
+  "license": "MIT"
+}
