@@ -1,129 +1,231 @@
-import React, { useRef, useEffect } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, Sparkles, OrbitControls } from '@react-three/drei';
+import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-// Low-Poly 3D Robot Buddy
-const CuteRobot = ({ position = [0, 0.4, 0], rotation = 0 }) => {
-  const robotRef = useRef();
+export default function Robot3DCanvas({
+  robotPos = { x: 0, y: 0 },
+  robotDir = 0,
+  gridSize = 4,
+  stars = [{ x: 3, y: 3 }],
+  obstacles = [{ x: 1, y: 1 }, { x: 2, y: 2 }]
+}) {
+  const containerRef = useRef(null);
+  const robotGroupRef = useRef(null);
+  const starsGroupRef = useRef(null);
 
-  useFrame((state, delta) => {
-    if (robotRef.current) {
-      robotRef.current.position.y = 0.4 + Math.sin(state.clock.elapsedTime * 4) * 0.05;
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    // Scene & Camera
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color('#1e293b');
+
+    const camera = new THREE.PerspectiveCamera(
+      45,
+      container.clientWidth / container.clientHeight,
+      0.1,
+      50
+    );
+    camera.position.set(2, 7, 7);
+    camera.lookAt(1.5, 0, 1.5);
+
+    // Renderer
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    container.appendChild(renderer.domElement);
+
+    // Lights
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+    scene.add(ambientLight);
+
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1.3);
+    dirLight.position.set(5, 12, 8);
+    dirLight.castShadow = true;
+    scene.add(dirLight);
+
+    // Floor Grid Tiles
+    const offset = gridSize / 2 - 0.5;
+    for (let r = 0; r < gridSize; r++) {
+      for (let c = 0; c < gridSize; c++) {
+        const isObstacle = obstacles.some((o) => o.x === c && o.y === r);
+        const tileGeo = new THREE.BoxGeometry(0.9, 0.15, 0.9);
+        const tileMat = new THREE.MeshStandardMaterial({
+          color: isObstacle ? 0xef4444 : (r + c) % 2 === 0 ? 0x334155 : 0x475569,
+          roughness: 0.5,
+        });
+        const tileMesh = new THREE.Mesh(tileGeo, tileMat);
+        tileMesh.position.set(c, 0, r);
+        tileMesh.receiveShadow = true;
+        scene.add(tileMesh);
+
+        if (isObstacle) {
+          const obsGeo = new THREE.BoxGeometry(0.7, 0.8, 0.7);
+          const obsMat = new THREE.MeshStandardMaterial({
+            color: 0x991b1b,
+            roughness: 0.6,
+          });
+          const obsMesh = new THREE.Mesh(obsGeo, obsMat);
+          obsMesh.position.set(c, 0.45, r);
+          obsMesh.castShadow = true;
+          scene.add(obsMesh);
+        }
+      }
     }
-  });
+
+    // Star Collectibles
+    const starsGroup = new THREE.Group();
+    scene.add(starsGroup);
+    starsGroupRef.current = starsGroup;
+
+    stars.forEach((s) => {
+      const starGeo = new THREE.OctahedronGeometry(0.35, 0);
+      const starMat = new THREE.MeshStandardMaterial({
+        color: 0xfacc15,
+        emissive: 0xeab308,
+        emissiveIntensity: 0.6,
+        roughness: 0.2,
+        metalness: 0.8,
+      });
+      const starMesh = new THREE.Mesh(starGeo, starMat);
+      starMesh.position.set(s.x, 0.6, s.y);
+      starMesh.castShadow = true;
+      starsGroup.add(starMesh);
+    });
+
+    // 3D Robot
+    const robotGroup = new THREE.Group();
+    robotGroupRef.current = robotGroup;
+    scene.add(robotGroup);
+
+    // Body
+    const bodyGeo = new THREE.BoxGeometry(0.65, 0.55, 0.55);
+    const bodyMat = new THREE.MeshStandardMaterial({
+      color: 0x06b6d4,
+      metalness: 0.7,
+      roughness: 0.3,
+    });
+    const body = new THREE.Mesh(bodyGeo, bodyMat);
+    body.position.y = 0.45;
+    body.castShadow = true;
+    robotGroup.add(body);
+
+    // Head
+    const headGeo = new THREE.BoxGeometry(0.45, 0.35, 0.4);
+    const headMat = new THREE.MeshStandardMaterial({
+      color: 0x0891b2,
+      metalness: 0.7,
+      roughness: 0.3,
+    });
+    const head = new THREE.Mesh(headGeo, headMat);
+    head.position.y = 0.85;
+    head.castShadow = true;
+    robotGroup.add(head);
+
+    // Eyes
+    const eyeGeo = new THREE.SphereGeometry(0.07, 16, 16);
+    const eyeMat = new THREE.MeshBasicMaterial({ color: 0xfef08a });
+    const leftEye = new THREE.Mesh(eyeGeo, eyeMat);
+    leftEye.position.set(0.12, 0.88, 0.21);
+    robotGroup.add(leftEye);
+
+    const rightEye = new THREE.Mesh(eyeGeo, eyeMat);
+    rightEye.position.set(-0.12, 0.88, 0.21);
+    robotGroup.add(rightEye);
+
+    // Antenna
+    const antStemGeo = new THREE.CylinderGeometry(0.02, 0.02, 0.18);
+    const antStemMat = new THREE.MeshStandardMaterial({ color: 0xfacc15 });
+    const antStem = new THREE.Mesh(antStemGeo, antStemMat);
+    antStem.position.y = 1.1;
+    robotGroup.add(antStem);
+
+    const antTipGeo = new THREE.SphereGeometry(0.06, 16, 16);
+    const antTipMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
+    const antTip = new THREE.Mesh(antTipGeo, antTipMat);
+    antTip.position.y = 1.22;
+    robotGroup.add(antTip);
+
+    // Wheels / Tracks
+    const wheelGeo = new THREE.BoxGeometry(0.12, 0.2, 0.65);
+    const wheelMat = new THREE.MeshStandardMaterial({ color: 0x1e293b });
+    const leftWheel = new THREE.Mesh(wheelGeo, wheelMat);
+    leftWheel.position.set(0.35, 0.15, 0);
+    robotGroup.add(leftWheel);
+
+    const rightWheel = new THREE.Mesh(wheelGeo, wheelMat);
+    rightWheel.position.set(-0.35, 0.15, 0);
+    robotGroup.add(rightWheel);
+
+    // Initial position
+    robotGroup.position.set(robotPos.x, 0, robotPos.y);
+    robotGroup.rotation.y = (robotDir * Math.PI) / 2;
+
+    // Resize
+    const handleResize = () => {
+      if (!container) return;
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    };
+    window.addEventListener('resize', handleResize);
+
+    // Animation Loop
+    let animationFrameId;
+    let clock = new THREE.Clock();
+
+    const animate = () => {
+      animationFrameId = requestAnimationFrame(animate);
+      const elapsed = clock.getElapsedTime();
+
+      // Star rotation & bounce
+      if (starsGroupRef.current) {
+        starsGroupRef.current.children.forEach((st, idx) => {
+          st.rotation.y = elapsed * 1.5 + idx;
+          st.position.y = 0.6 + Math.sin(elapsed * 2 + idx) * 0.1;
+        });
+      }
+
+      // Robot gentle hover bounce
+      if (robotGroupRef.current) {
+        robotGroupRef.current.position.y = Math.sin(elapsed * 4) * 0.03;
+      }
+
+      renderer.render(scene, camera);
+    };
+
+    animate();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', handleResize);
+      if (renderer.domElement && container.contains(renderer.domElement)) {
+        container.removeChild(renderer.domElement);
+      }
+      renderer.dispose();
+    };
+  }, [gridSize, obstacles]);
+
+  // Update robot position and direction on state change
+  useEffect(() => {
+    if (robotGroupRef.current) {
+      robotGroupRef.current.position.x = robotPos.x;
+      robotGroupRef.current.position.z = robotPos.y;
+      robotGroupRef.current.rotation.y = -(robotDir * Math.PI) / 2;
+    }
+  }, [robotPos, robotDir]);
 
   return (
-    <group ref={robotRef} position={position} rotation={[0, rotation, 0]}>
-      {/* Robot Body */}
-      <mesh position={[0, 0.4, 0]}>
-        <boxGeometry args={[0.7, 0.6, 0.6]} />
-        <meshStandardMaterial color="#00bcd4" roughness={0.3} metalness={0.8} />
-      </mesh>
-
-      {/* Robot Head */}
-      <mesh position={[0, 0.85, 0]}>
-        <boxGeometry args={[0.5, 0.4, 0.45]} />
-        <meshStandardMaterial color="#0097a7" roughness={0.3} metalness={0.8} />
-      </mesh>
-
-      {/* Eyes */}
-      <mesh position={[0.13, 0.9, 0.24]}>
-        <sphereGeometry args={[0.08, 16, 16]} />
-        <meshBasicMaterial color="#ffeb3b" />
-      </mesh>
-      <mesh position={[-0.13, 0.9, 0.24]}>
-        <sphereGeometry args={[0.08, 16, 16]} />
-        <meshBasicMaterial color="#ffeb3b" />
-      </mesh>
-
-      {/* Antenna */}
-      <mesh position={[0, 1.15, 0]}>
-        <cylinderGeometry args={[0.03, 0.03, 0.2]} />
-        <meshStandardMaterial color="#ffd166" />
-      </mesh>
-      <mesh position={[0, 1.28, 0]}>
-        <sphereGeometry args={[0.07, 16, 16]} />
-        <meshBasicMaterial color="#ff5252" />
-      </mesh>
-
-      {/* Tracks / Wheels */}
-      <mesh position={[0.38, 0.15, 0]}>
-        <boxGeometry args={[0.15, 0.25, 0.7]} />
-        <meshStandardMaterial color="#37474f" />
-      </mesh>
-      <mesh position={[-0.38, 0.15, 0]}>
-        <boxGeometry args={[0.15, 0.25, 0.7]} />
-        <meshStandardMaterial color="#37474f" />
-      </mesh>
-    </group>
+    <div
+      ref={containerRef}
+      style={{
+        width: '100%',
+        height: '360px',
+        borderRadius: '24px',
+        overflow: 'hidden',
+        boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.3)',
+      }}
+    />
   );
-};
-
-// 3D Star Goal
-const StarGoal = ({ position = [2, 0.6, 0] }) => {
-  const starRef = useRef();
-
-  useFrame((state, delta) => {
-    if (starRef.current) {
-      starRef.current.rotation.y += delta * 2;
-    }
-  });
-
-  return (
-    <Float speed={3} floatIntensity={0.8}>
-      <group ref={starRef} position={position}>
-        <mesh>
-          <octahedronGeometry args={[0.4, 0]} />
-          <meshStandardMaterial
-            color="#ffd166"
-            emissive="#ffb703"
-            emissiveIntensity={0.8}
-            metalness={0.9}
-          />
-        </mesh>
-        <Sparkles count={20} scale={1.5} size={4} speed={1} color="#ffd166" />
-      </group>
-    </Float>
-  );
-};
-
-// Grid Floor Tiles
-const GridFloor = () => {
-  const tiles = [];
-  for (let x = -2; x <= 2; x++) {
-    for (let z = -2; z <= 2; z++) {
-      const isEven = (x + z) % 2 === 0;
-      tiles.push(
-        <mesh key={`${x}-${z}`} position={[x * 1.2, 0, z * 1.2]} receiveShadow>
-          <boxGeometry args={[1.1, 0.15, 1.1]} />
-          <meshStandardMaterial
-            color={isEven ? '#e0f7fa' : '#b2ebf2'}
-            roughness={0.4}
-          />
-        </mesh>
-      );
-    }
-  }
-  return <group>{tiles}</group>;
-};
-
-const Robot3DCanvas = ({ robotPos = [0, 0, 0], robotAngle = 0, starPos = [2.4, 0.6, 0] }) => {
-  return (
-    <div style={{ width: '100%', height: '360px', borderRadius: '24px', overflow: 'hidden', background: '#073b4c' }}>
-      <Canvas camera={{ position: [0, 5, 6], fov: 45 }}>
-        <ambientLight intensity={0.9} />
-        <directionalLight position={[5, 10, 5]} intensity={1.5} castShadow />
-        <pointLight position={[0, 4, 0]} intensity={0.8} color="#00e5ff" />
-
-        <OrbitControls enableZoom={false} maxPolarAngle={Math.PI / 2.3} />
-
-        <GridFloor />
-        <CuteRobot position={[robotPos[0] * 1.2, 0.4, robotPos[1] * 1.2]} rotation={robotAngle} />
-        <StarGoal position={[starPos[0], starPos[1], starPos[2]]} />
-      </Canvas>
-    </div>
-  );
-};
-
-export default Robot3DCanvas;
+}
