@@ -20,7 +20,7 @@ const CodingLab = () => {
   ];
 
   const [program, setProgram] = useState([]);
-  const [robotPos, setRobotPos] = useState([0, 0]);
+  const [robotPos, setRobotPos] = useState({ x: 0, y: 0 });
   const [robotAngle, setRobotAngle] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [feedback, setFeedback] = useState('');
@@ -37,7 +37,7 @@ const CodingLab = () => {
   const handleClear = () => {
     soundService.playPop();
     setProgram([]);
-    setRobotPos([0, 0]);
+    setRobotPos({ x: 0, y: 0 });
     setRobotAngle(0);
     setFeedback('');
   };
@@ -52,7 +52,7 @@ const CodingLab = () => {
     let currentX = 0;
     let currentZ = 0;
     let currentRot = 0;
-    setRobotPos([0, 0]);
+    setRobotPos({ x: 0, y: 0 });
     setRobotAngle(0);
 
     for (let i = 0; i < program.length; i++) {
@@ -65,19 +65,19 @@ const CodingLab = () => {
         const forwardX = Math.round(Math.cos(currentRot));
         const forwardZ = Math.round(Math.sin(currentRot));
         currentX += (forwardX !== 0 ? forwardX : 1);
-        setRobotPos([currentX, currentZ]);
+        setRobotPos({ x: currentX, y: currentZ });
       } else if (cmd.type === 'TURN_LEFT') {
         soundService.playPop();
-        currentRot += Math.PI / 2;
+        currentRot += 1;
         setRobotAngle(currentRot);
       } else if (cmd.type === 'TURN_RIGHT') {
         soundService.playPop();
-        currentRot -= Math.PI / 2;
+        currentRot -= 1;
         setRobotAngle(currentRot);
       } else if (cmd.type === 'JUMP') {
         soundService.playPop();
         currentX += 2;
-        setRobotPos([currentX, currentZ]);
+        setRobotPos({ x: currentX, y: currentZ });
       }
     }
 
@@ -158,7 +158,7 @@ const CodingLab = () => {
             🤖 Robo-Buddy 3D Grid Simulator
           </h2>
 
-          <Robot3DCanvas robotPos={robotPos} robotAngle={robotAngle} starPos={[2.4, 0.6, 0]} />
+          <Robot3DCanvas robotPos={robotPos} robotDir={robotAngle} stars={[{ x: 2, y: 0 }]} />
 
           {feedback && (
             <div style={{
