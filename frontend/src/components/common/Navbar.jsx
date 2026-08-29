@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, ShoppingBag, Trophy, BarChart3, Shield, Volume2, VolumeX, LogOut } from 'lucide-react';
+import { Home, ShoppingBag, Trophy, BarChart3, Shield, Volume2, VolumeX, LogOut } from './Icons';
 import { useAuth } from '../../context/AuthContext';
 import { useGame } from '../../context/GameContext';
 import soundService from '../../services/soundService';

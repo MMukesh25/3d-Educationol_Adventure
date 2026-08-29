@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Users, Award, BookOpen, Database, ArrowLeft, Trash2, Plus } from 'lucide-react';
+import { Shield, Users, Award, BookOpen, Database, ArrowLeft, Trash2, Plus } from '../components/common/Icons';
 import { useNavigate } from 'react-router-dom';
 import soundService from '../services/soundService';
 import gameService from '../services/gameService';

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Play, RotateCcw, Plus, Trash2, Sparkles, Check } from 'lucide-react';
+import { ArrowLeft, Play, RotateCcw, Plus, Trash2, Sparkles, Check } from '../components/common/Icons';
 import { useNavigate } from 'react-router-dom';
 import Robot3DCanvas from '../components/3d/Robot3DCanvas';
 import MascotGuide from '../components/common/MascotGuide';

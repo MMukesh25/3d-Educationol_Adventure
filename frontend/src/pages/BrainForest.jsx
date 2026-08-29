@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, RefreshCw, Check, Sparkles } from 'lucide-react';
+import { ArrowLeft, RefreshCw, Check, Sparkles } from '../components/common/Icons';
 import { useNavigate } from 'react-router-dom';
 import MiniWorldScene from '../components/3d/MiniWorldScene';
 import MascotGuide from '../components/common/MascotGuide';

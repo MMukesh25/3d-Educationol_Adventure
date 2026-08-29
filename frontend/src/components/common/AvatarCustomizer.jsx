@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Check, Sparkles } from 'lucide-react';
+import { X, Check, Sparkles } from './Icons';
 import { useGame } from '../../context/GameContext';
 import soundService from '../../services/soundService';
 

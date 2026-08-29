@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BarChart3, Clock, Award, Flame, BookOpen, CheckCircle, ArrowLeft } from 'lucide-react';
+import { BarChart3, Clock, Award, Flame, BookOpen, CheckCircle, ArrowLeft } from '../components/common/Icons';
 import { useNavigate } from 'react-router-dom';
 import soundService from '../services/soundService';
 import gameService from '../services/gameService';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, Trophy, ArrowRight } from 'lucide-react';
+import { Sparkles, Trophy, ArrowRight } from './Icons';
 import { useGame } from '../../context/GameContext';
 import soundService from '../../services/soundService';
 

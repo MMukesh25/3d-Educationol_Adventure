@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Check, Search, Key, Sparkles } from 'lucide-react';
+import { ArrowLeft, Check, Search, Key, Sparkles } from '../components/common/Icons';
 import { useNavigate } from 'react-router-dom';
 import MiniWorldScene from '../components/3d/MiniWorldScene';
 import MascotGuide from '../components/common/MascotGuide';

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Trophy, Star, Sparkles, CheckCircle2, Lock } from 'lucide-react';
+import { Trophy, Star, Sparkles, CheckCircle2, Lock } from '../components/common/Icons';
 import soundService from '../services/soundService';
 import gameService from '../services/gameService';
 

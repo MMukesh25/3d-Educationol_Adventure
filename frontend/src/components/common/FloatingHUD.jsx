@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Flame, User, Palette } from 'lucide-react';
+import { Sparkles, Flame, User, Palette } from './Icons';
 import { useGame } from '../../context/GameContext';
 import soundService from '../../services/soundService';
 import AvatarCustomizer from './AvatarCustomizer';

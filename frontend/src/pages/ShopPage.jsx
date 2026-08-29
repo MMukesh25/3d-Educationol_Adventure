@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingBag, Sparkles, Check, Lock, AlertCircle } from 'lucide-react';
+import { ShoppingBag, Sparkles, Check, Lock, AlertCircle } from '../components/common/Icons';
 import { useGame } from '../context/GameContext';
 import soundService from '../services/soundService';
 import gameService from '../services/gameService';

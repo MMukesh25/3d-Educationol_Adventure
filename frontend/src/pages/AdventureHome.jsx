@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sparkles, Compass, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Sparkles, Compass, CheckCircle2, ArrowRight } from '../components/common/Icons';
 import AdventureWorld3D from '../components/3d/AdventureWorld3D';
 import MascotGuide from '../components/common/MascotGuide';
 import { useGame } from '../context/GameContext';

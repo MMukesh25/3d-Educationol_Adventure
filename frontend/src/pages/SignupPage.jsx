@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Sparkles, ArrowRight, UserPlus } from 'lucide-react';
+import { Sparkles, ArrowRight, UserPlus } from '../components/common/Icons';
 import { useAuth } from '../context/AuthContext';
 import soundService from '../services/soundService';
 
