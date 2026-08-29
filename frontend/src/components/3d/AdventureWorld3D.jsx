@@ -5,9 +5,9 @@ import soundService from '../../services/soundService';
 
 const WORLDS = [
   { id: 'math', title: 'Math Island', emoji: '🍎', color: '#ff5e7e', route: '/math', pos: [-5, 1.5, 2] },
-  { id: 'detective', title: 'Mystery House', emoji: '🔍', color: '#a55eea', route: '/detective', pos: [-3, 2.5, -4] },
+  { id: 'detective', title: 'Mystery House', emoji: '🔍', color: '#a55eea', route: '/mystery', pos: [-3, 2.5, -4] },
   { id: 'coding', title: 'Coding Lab', emoji: '💻', color: '#00d2d3', route: '/coding', pos: [0, 2, 5] },
-  { id: 'memory', title: 'Brain Forest', emoji: '🌳', color: '#10ac84', route: '/memory', pos: [3, 2.2, -4] },
+  { id: 'memory', title: 'Brain Forest', emoji: '🌳', color: '#10ac84', route: '/brain', pos: [3, 2.2, -4] },
   { id: 'puzzle', title: 'Puzzle Castle', emoji: '🏰', color: '#ff9f43', route: '/puzzle', pos: [5, 1.8, 2] },
   { id: 'creative', title: 'Creativity Zone', emoji: '🎨', color: '#54a0ff', route: '/creative', pos: [0, 3.5, -6] },
 ];
