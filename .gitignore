@@ -7,18 +7,19 @@ Thumbs.db
 .vscode/
 
 # Java / Maven
+target/
+*.jar
+*.war
+*.class
 backend/target/
 backend/*.jar
 backend/*.war
 backend/.mvn/wrapper/maven-wrapper.jar
 backend/mvnw
 backend/mvnw.cmd
-
-# Backend sub-repository
 backend/
 
-# Node
- / React
+# Node / React
 frontend/node_modules/
 frontend/dist/
 frontend/dist-ssr/

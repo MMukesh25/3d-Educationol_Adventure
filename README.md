@@ -1,6 +1,6 @@
 # 🌟 3D Animated Educational Adventure Platform for Children
 
-A full-stack gamified educational learning platform for children built with **Java Spring Boot 3**, **MySQL**, **React**, and **Three.js / React Three Fiber**.
+A full-stack gamified educational learning platform for children built with **Java Spring Boot 3**, **MySQL/H2**, **React**, and **Three.js**.
 
 ![Platform Preview](https://img.shields.io/badge/Stack-Java%20Spring%20Boot%20%2B%20React%20%2B%20Three.js-blueviolet?style=for-the-badge)
 ![Status-Production-Ready](https://img.shields.io/badge/Status-Production--Ready-brightgreen?style=for-the-badge)
@@ -9,20 +9,14 @@ A full-stack gamified educational learning platform for children built with **Ja
 
 ## 🚀 Key Features
 
-* **🏰 Central 3D Adventure World**: Interactive 3D floating island hub with friendly character navigation, animated portals, floating clouds, and dynamic day/night ambient lighting.
-* **🧮 6 Immersive Learning Worlds**:
-  * **🧮 Math Island**: Visual counting, fruit scales, addition/subtraction, pattern completions.
-  * **🔍 Mystery House**: Detective treasure hunts, magnifying glass clue searches, key unlocking.
-  * **💻 Coding Lab**: Visual block-based programming (Sequence, Loops, Conditionals) controlling a 3D animated Robot traversing grid mazes.
-  * **🧠 Brain Forest**: Animated memory card matching, difference finders, and sequence recall.
-  * **🧩 Puzzle Castle**: Tangram shape fitting, spatial puzzles, and classification games.
-  * **🎨 Creativity Zone**: 3D room decoration, block building, and avatar styling.
-* **🪙 Real Server-Controlled Economy**: Backend validates activity attempts, securely calculates and awards coins & stars, records audit transactions in MySQL.
-* **🛍️ Reward Shop & Character Customizer**: Spend earned coins on hats, clothes, pets, and room accessories.
-* **👨‍👩‍👧 Parent Dashboard**: Analytics tracking learning progress, subject mastery %, study time, and daily streaks.
-* **🛠️ Admin Management Panel**: Live content management for questions, activities, achievements, and user moderation.
-* **🔒 Enterprise Security**: JWT authentication with role-based access control (`CHILD`, `PARENT`, `ADMIN`).
-* **🎵 Native Web Audio Synthesizer**: Joyful sound effects (coins, fanfare, correct chimes, button clicks) without heavy media downloads.
+* **🏰 Central 3D Adventure World**: Interactive 3D floating island hub with animated portals and clouds.
+* **🧮 6 Immersive Learning Worlds**: Math Island, Mystery House, Coding Lab, Brain Forest, Puzzle Castle, Creativity Zone.
+* **🪙 Server-Controlled Economy**: Backend validates attempts, awards coins & stars, records audit transactions.
+* **🛍️ Reward Shop & Avatar Customizer**: Spend coins on hats, pets, and outfits.
+* **👨‍👩‍👧 Parent Dashboard**: Analytics tracking learning progress, subject mastery, and daily streaks.
+* **🛠️ Admin Panel**: Content management for questions, activities, achievements, and user moderation.
+* **🔒 JWT Security**: Role-based access control (`CHILD`, `PARENT`, `ADMIN`).
+* **🎵 Web Audio Synthesizer**: Sound effects without heavy media downloads.
 
 ---
 
@@ -54,15 +48,14 @@ A full-stack gamified educational learning platform for children built with **Ja
 
 ## 🏃 Quick Start
 
-### 1. Backend Setup (Java 17+ / Maven / MySQL)
+### 1. Backend Setup (Java 17+ / Maven)
 ```bash
 cd backend
 mvn spring-boot:run
 ```
-* Backend runs at: `http://localhost:8080`
-* Default Admin: `admin` / `admin123`
-* Default Demo Child: `leo_explorer` / `child123`
-* Default Demo Parent: `parent_sarah` / `parent123`
+* Runs at: `http://localhost:8080`
+* Uses H2 in-memory DB by default (zero-config startup)
+* Pre-seeded accounts: `leo_explorer`/`child123`, `parent_sarah`/`parent123`, `admin`/`admin123`
 
 ### 2. Frontend Setup (Node.js 18+)
 ```bash
@@ -70,4 +63,18 @@ cd frontend
 npm install
 npm run dev
 ```
-* Frontend runs at: `http://localhost:5173`
+* Runs at: `http://localhost:5173`
+* Proxy forwards `/api` calls to the backend on port 8080
+
+### 3. Run Both at Once
+From the project root:
+```bash
+npm install --prefix frontend
+npm run dev
+```
+
+---
+
+## 📄 License
+
+MIT
